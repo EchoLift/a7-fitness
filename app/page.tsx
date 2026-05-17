@@ -127,7 +127,7 @@ const testimonials = [
 export default function Home() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#0a0a0a] text-white">
-      <nav className="fixed left-1/2 top-4 z-50 w-[min(1120px,calc(100%-24px))] -translate-x-1/2 rounded-full border border-white/10 bg-black/45 px-4 py-3 shadow-2xl backdrop-blur-2xl">
+      <nav className="fixed left-1/2 top-4 z-50 w-[min(1120px,calc(100%_-_24px))] -translate-x-1/2 rounded-full border border-white/10 bg-black/45 px-4 py-3 shadow-2xl backdrop-blur-2xl">
         <div className="flex items-center justify-between gap-4">
           <a href="#home" className="flex items-center gap-3">
             <span className="grid size-10 place-items-center rounded-full bg-gradient-to-br from-red-600 to-orange-400 font-display text-2xl text-white">A7</span>
@@ -175,16 +175,19 @@ export default function Home() {
               </span>
             </motion.h1>
             <motion.p variants={fadeUp} className="mt-7 max-w-2xl text-lg leading-8 text-zinc-200 md:text-xl">
-              Certified trainers, modern equipment, a motivating atmosphere, hygiene-first spaces, and flexible timings built for real transformation in Erragadda.
+              Certified trainers, modern equipment,
+              <br className="md:hidden" /> a motivating atmosphere,
+              <br className="md:hidden" /> hygiene-first spaces, and flexible timings
+              <br className="md:hidden" /> built for real transformation in Erragadda.
             </motion.p>
             <motion.div variants={fadeUp} className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <a href="#membership" className="group inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-red-600 to-orange-400 px-7 py-4 text-sm font-black uppercase tracking-[0.14em] text-white shadow-[0_0_42px_rgba(255,31,53,0.28)]">
+              <a href="#membership" className="group inline-flex w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-red-600 to-orange-400 px-7 py-4 text-sm font-black uppercase tracking-[0.14em] text-white shadow-[0_0_42px_rgba(255,31,53,0.28)] sm:w-auto">
                 Join Now <ArrowRight className="transition group-hover:translate-x-1" size={18} />
               </a>
-              <a href={whatsAppHref} className="inline-flex items-center justify-center gap-3 rounded-full border border-white/14 bg-white/8 px-7 py-4 text-sm font-black uppercase tracking-[0.14em] text-white backdrop-blur-xl transition hover:bg-white hover:text-black">
+              <a href={whatsAppHref} className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-white/14 bg-white/8 px-7 py-4 text-sm font-black uppercase tracking-[0.14em] text-white backdrop-blur-xl transition hover:bg-white hover:text-black sm:w-auto">
                 Book Free Trial
               </a>
-              <a href={phoneHref} className="inline-flex items-center justify-center gap-3 rounded-full border border-red-400/40 px-7 py-4 text-sm font-black uppercase tracking-[0.14em] text-red-100 transition hover:bg-red-500/20">
+              <a href={phoneHref} className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-red-400/40 px-7 py-4 text-sm font-black uppercase tracking-[0.14em] text-red-100 transition hover:bg-red-500/20 sm:w-auto">
                 <Phone size={17} /> Call Now
               </a>
             </motion.div>
@@ -400,12 +403,12 @@ export default function Home() {
         </div>
       </footer>
 
-      <div className="fixed bottom-4 left-4 right-4 z-50 grid grid-cols-2 gap-3 md:hidden">
-        <a href={phoneHref} className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-3 py-4 text-xs font-black uppercase tracking-[0.08em] text-black shadow-2xl">
-          <Phone size={17} /> Call
+      <div className="fixed bottom-4 left-3 z-50 grid grid-cols-2 gap-3 md:hidden" style={{ width: "min(366px, calc(100vw - 24px))" }}>
+        <a href={phoneHref} className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-full bg-white px-3 py-4 text-xs font-black uppercase tracking-[0.04em] text-black shadow-2xl">
+          <Phone size={16} /> <span>Call</span>
         </a>
-        <a href={whatsAppHref} className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-red-600 to-orange-400 px-3 py-4 text-xs font-black uppercase tracking-[0.08em] shadow-2xl">
-          <MessageCircle size={17} /> Trial
+        <a href={whatsAppHref} aria-label="Book a free trial on WhatsApp" className="inline-flex min-w-0 flex-1 items-center justify-center rounded-full bg-gradient-to-r from-red-600 to-orange-400 px-3 py-4 shadow-2xl">
+          <MessageCircle size={18} />
         </a>
       </div>
 

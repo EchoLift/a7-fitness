@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, useMotionValue, useSpring, useTransform, type Variants } from "framer-motion";
+import { motion, useInView, type Variants } from "framer-motion";
 import {
   ArrowRight,
   BicepsFlexed,
@@ -24,11 +24,12 @@ import {
   Waves
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const phone = "076800 69791";
 const phoneHref = "tel:+917680069791";
 const whatsAppHref = "https://wa.me/917680069791?text=Hi%20A7%20Fitness%20Studio%2C%20I%20want%20to%20book%20a%20free%20trial.";
+const instagramHref = "https://www.instagram.com/a7_fitness_studio/";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -42,22 +43,30 @@ const stagger = {
 
 function CountUp({ value, suffix = "" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const motionValue = useMotionValue(0);
-  const spring = useSpring(motionValue, { duration: 1200, bounce: 0 });
-  const rounded = useTransform(spring, (latest) => Math.round(latest));
+  const inView = useInView(ref, { once: true, amount: 0.35 });
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    if (inView) motionValue.set(value);
-  }, [inView, motionValue, value]);
+    if (!inView) return;
 
-  useEffect(() => {
-    return rounded.on("change", (latest) => {
-      if (ref.current) ref.current.textContent = `${latest}${suffix}`;
-    });
-  }, [rounded, suffix]);
+    let frame = 0;
+    let start: number | null = null;
+    const duration = 1100;
 
-  return <span ref={ref}>0{suffix}</span>;
+    const tick = (timestamp: number) => {
+      start ??= timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+
+      setCount(Math.round(eased * value));
+      if (progress < 1) frame = requestAnimationFrame(tick);
+    };
+
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [inView, value]);
+
+  return <span ref={ref}>{count}{suffix}</span>;
 }
 
 function SectionIntro({
@@ -139,9 +148,14 @@ export default function Home() {
             <a href="#gallery">Gallery</a>
             <a href="#contact">Contact</a>
           </div>
-          <a href={phoneHref} className="hidden rounded-full bg-white px-5 py-3 text-xs font-black uppercase tracking-[0.12em] text-black transition hover:bg-orange-400 md:inline-flex">
-            Call Now
-          </a>
+          <div className="hidden items-center gap-3 md:flex">
+            <a href={instagramHref} target="_blank" rel="noreferrer" aria-label="A7 Fitness Studio on Instagram" className="grid size-11 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-orange-300 transition hover:border-orange-400/50 hover:bg-orange-400 hover:text-black">
+              <Instagram size={18} />
+            </a>
+            <a href={phoneHref} className="rounded-full bg-white px-5 py-3 text-xs font-black uppercase tracking-[0.12em] text-black transition hover:bg-orange-400">
+              Call Now
+            </a>
+          </div>
           <button className="grid size-10 place-items-center rounded-full border border-white/10 md:hidden" aria-label="Open navigation">
             <Menu size={18} />
           </button>
@@ -282,8 +296,8 @@ export default function Home() {
                   <h3 className="mt-2 font-display text-4xl">{name}</h3>
                   <p className="mt-3 leading-7 text-zinc-300">{detail}</p>
                   <div className="mt-5 flex gap-3">
-                    <span className="grid size-10 place-items-center rounded-full border border-white/10"><Instagram size={17} /></span>
-                    <span className="grid size-10 place-items-center rounded-full border border-white/10"><MessageCircle size={17} /></span>
+                    <a href={instagramHref} target="_blank" rel="noreferrer" aria-label="A7 Fitness Studio on Instagram" className="grid size-10 place-items-center rounded-full border border-white/10 transition hover:border-orange-400/60 hover:bg-orange-400 hover:text-black"><Instagram size={17} /></a>
+                    <a href={whatsAppHref} aria-label="Message A7 Fitness Studio on WhatsApp" className="grid size-10 place-items-center rounded-full border border-white/10 transition hover:border-orange-400/60 hover:bg-orange-400 hover:text-black"><MessageCircle size={17} /></a>
                   </div>
                 </div>
               </motion.article>
@@ -399,13 +413,19 @@ export default function Home() {
             <a href="#gallery">Gallery</a>
             <a href="#membership">Membership</a>
             <a href="#contact">Contact</a>
+            <a href={instagramHref} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-orange-300">
+              <Instagram size={16} /> Instagram
+            </a>
           </div>
         </div>
       </footer>
 
-      <div className="fixed bottom-4 left-3 z-50 grid grid-cols-2 gap-3 md:hidden" style={{ width: "min(366px, calc(100vw - 24px))" }}>
+      <div className="fixed bottom-4 left-3 z-50 grid grid-cols-[1.35fr_1fr_1fr] gap-3 md:hidden" style={{ width: "min(366px, calc(100vw - 24px))" }}>
         <a href={phoneHref} className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-full bg-white px-3 py-4 text-xs font-black uppercase tracking-[0.04em] text-black shadow-2xl">
           <Phone size={16} /> <span>Call</span>
+        </a>
+        <a href={instagramHref} target="_blank" rel="noreferrer" aria-label="A7 Fitness Studio on Instagram" className="inline-flex min-w-0 flex-1 items-center justify-center rounded-full border border-white/10 bg-black/80 px-3 py-4 text-orange-300 shadow-2xl backdrop-blur">
+          <Instagram size={18} />
         </a>
         <a href={whatsAppHref} aria-label="Book a free trial on WhatsApp" className="inline-flex min-w-0 flex-1 items-center justify-center rounded-full bg-gradient-to-r from-red-600 to-orange-400 px-3 py-4 shadow-2xl">
           <MessageCircle size={18} />
@@ -414,6 +434,7 @@ export default function Home() {
 
       <div className="fixed bottom-6 right-6 z-50 hidden flex-col gap-3 md:flex">
         <a href={phoneHref} aria-label="Call A7 Fitness Studio" className="grid size-14 place-items-center rounded-full bg-white text-black shadow-2xl transition hover:scale-105"><Phone size={21} /></a>
+        <a href={instagramHref} target="_blank" rel="noreferrer" aria-label="A7 Fitness Studio on Instagram" className="grid size-14 place-items-center rounded-full border border-white/10 bg-black/70 text-orange-300 shadow-2xl backdrop-blur transition hover:scale-105 hover:bg-orange-400 hover:text-black"><Instagram size={21} /></a>
         <a href={whatsAppHref} aria-label="WhatsApp A7 Fitness Studio" className="grid size-14 place-items-center rounded-full bg-gradient-to-br from-red-600 to-orange-400 shadow-2xl transition hover:scale-105"><MessageCircle size={21} /></a>
       </div>
     </main>

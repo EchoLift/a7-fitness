@@ -1,0 +1,149 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap");
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+  --muted: #9ca3af;
+  --line: rgba(255, 255, 255, 0.12);
+  --red: #ff1f35;
+  --orange: #ff7a18;
+  --gold: #ffbf3f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--background);
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(255, 31, 53, 0.22), transparent 30rem),
+    radial-gradient(circle at 88% 20%, rgba(255, 122, 24, 0.16), transparent 28rem),
+    linear-gradient(180deg, #090909 0%, #111111 42%, #080808 100%);
+  color: var(--foreground);
+  font-family: Inter, Poppins, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 74%);
+}
+
+::selection {
+  background: var(--red);
+  color: white;
+}
+
+a {
+  text-decoration: none;
+}
+
+.font-display {
+  font-family: "Bebas Neue", Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  letter-spacing: 0;
+}
+
+.section-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.premium-card {
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.035)),
+    rgba(14, 14, 14, 0.84);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(20px);
+}
+
+.glow-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 220ms ease;
+  background: linear-gradient(135deg, rgba(255, 31, 53, 0.9), rgba(255, 122, 24, 0.65), rgba(255, 255, 255, 0.16));
+}
+
+.glow-border:hover::before {
+  opacity: 1;
+}
+
+.fitness-placeholder {
+  position: relative;
+  min-height: 260px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background:
+    linear-gradient(135deg, rgba(255, 31, 53, 0.18), transparent 42%),
+    linear-gradient(315deg, rgba(255, 122, 24, 0.18), transparent 38%),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.075) 0 1px, transparent 1px 13px),
+    #181818;
+}
+
+.fitness-placeholder::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, 0.82));
+}
+
+.placeholder-label {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1;
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-media {
+  background:
+    linear-gradient(90deg, rgba(10, 10, 10, 0.92) 0%, rgba(10, 10, 10, 0.64) 40%, rgba(10, 10, 10, 0.28) 100%),
+    linear-gradient(180deg, rgba(10, 10, 10, 0.22), #0a0a0a 96%),
+    radial-gradient(circle at 72% 30%, rgba(255, 31, 53, 0.28), transparent 28rem),
+    repeating-linear-gradient(-28deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 17px),
+    #151515;
+}
+
+.map-frame {
+  filter: grayscale(1) invert(0.9) contrast(1.1) saturate(0.25);
+}
+
+@media (max-width: 768px) {
+  .section-shell {
+    width: min(100% - 24px, 1180px);
+  }
+}
